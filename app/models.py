@@ -28,6 +28,14 @@ class Employee(UserMixin, db.Model):
         """
         raise AttributeError("Password is not readable attribute")
 
+    @password.setter
+    def password(self, password):
+        """
+        Prevent password for being accessed
+        :return:
+        """
+        self.password_hash = generate_password_hash(password)
+
     def verify_password(self, password):
         """
         check if hashed password is matches actual password
