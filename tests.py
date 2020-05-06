@@ -77,5 +77,42 @@ class TestModels(TestBase):
         self.assertEqual(Role.query.count(), 1)
 
 
+class TestViews(TestBase):
+    """
+    Test views
+    """
+
+    def test_home_page_views(self):
+        """
+        test home page
+        :return:
+        """
+        response = self.client.get(url_for('home.homepage'))
+        self.assertEqual(response.status_code, 200)
+
+    def test_login_view(self):
+        """
+        test login view
+        :return:
+        """
+        response = self.client.get('auth.login')
+        self.assertEqual(response.status_code, 200)
+
+    def test_logout_view(self):
+        """
+        test logout after login
+        :return:
+        """
+        target_url = url_for('auth.logout')
+        redirect_url = url_for('auth.login', next=target_url)
+        response = self.client.get(target_url)
+        self.assertEqual(response.status_code, 302)
+        self.assertRedirects(response, redirect_url)
+
+    def test_404_not_found(self):
+        response = self.client.get('/404error')
+        self.assertEqual(response.status_code, 404)
+
+
 if __name__ == "__main__":
     unittest.main()
