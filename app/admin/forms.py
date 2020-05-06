@@ -3,7 +3,7 @@ from wtforms import StringField, SubmitField
 from wtforms.validators import DataRequired
 
 
-class DepartmentForms(FlaskForm):
+class DepartmentForm(FlaskForm):
     """
     Department add or edit by admin
     """
