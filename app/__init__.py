@@ -3,6 +3,8 @@
 from flask import Flask
 from flask_sqlalchemy import SQLAlchemy
 from flask_login import LoginManager
+from flask_migrate import Migrate
+
 
 # local imports
 
@@ -29,6 +31,8 @@ def create_app(config_name):
     app.config.from_pyfile('config.py')
     db.init_app(app)
     login_manager.init_app(app)
-    login_manager.login_message(ApplicationMessages.MUST_BE_LOGIN)
+    login_manager.login_message = ApplicationMessages.MUST_BE_LOGIN
     login_manager.login_view = "auth.login"
+    migrate = Migrate(app, db)
+    from app import models
     return app
