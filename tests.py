@@ -18,7 +18,7 @@ class TestBase(TestCase):
         config_name = 'testing'
         app = create_app(config_name)
         app.config.update(
-            SQLALCHEMY_DATABASE_URI='mysql://dt_admin:dt2020@localhost/dreamteam_test'
+            SQLALCHEMY_DATABASE_URI='mysql://admin:dt2020@localhost/testdb'
         )
         return app
 
