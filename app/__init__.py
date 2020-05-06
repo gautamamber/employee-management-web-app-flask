@@ -7,7 +7,10 @@ from flask_migrate import Migrate
 
 
 # local imports
-
+from app import models
+from .admin import admin as admin_blueprint
+from .auth import auth as auth_blueprint
+from .home import home as home_blueprint
 from config import app_config
 from messages import ApplicationMessages
 
@@ -34,5 +37,7 @@ def create_app(config_name):
     login_manager.login_message = ApplicationMessages.MUST_BE_LOGIN
     login_manager.login_view = "auth.login"
     migrate = Migrate(app, db)
-    from app import models
+    app.register_blueprint(home_blueprint)
+    app.register_blueprint(admin_blueprint, url_prefix='/admin')
+    app.register_blueprint(auth_blueprint)
     return app
