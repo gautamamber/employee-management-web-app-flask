@@ -1,4 +1,4 @@
-from flask import Flask
+from flask import Flask, render_template
 from flask_bootstrap import Bootstrap
 from flask_login import LoginManager
 from flask_migrate import Migrate
@@ -33,5 +33,32 @@ def create_app(config_name):
 
     from .home import home as home_blueprint
     app.register_blueprint(home_blueprint)
+
+    @app.errorhandler(403)
+    def forbidden(error):
+        """
+        403 forbidden error
+        :param error:
+        :return:
+        """
+        return render_template('errors/403.html', title='Forbidden'), 403
+
+    @app.errorhandler(404)
+    def page_not_found(error):
+        """
+        404 not found error
+        :param error:
+        :return:
+        """
+        return render_template('errors/404.html', title='Page Not Found'), 404
+
+    @app.errorhandler(500)
+    def internal_server_error(error):
+        """
+        500 Internal server error
+        :param error: 
+        :return: 
+        """
+        return render_template('errors/500.html', title='Server Error'), 500
 
     return app
